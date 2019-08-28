@@ -21,3 +21,6 @@ Examples/Unified/FSharp/obj/
 /packages/FSharp.Core.4.6.2
 /Examples/GettingStarted/Integer/CSharp/bin
 /Examples/GettingStarted/Integer/CSharp/obj
+/Examples/GettingStarted/MoveArrayContent/CSharp/bin/Debug/netcoreapp2.2
+/Examples/GettingStarted/MoveArrayContent/CSharp/obj
+/Examples/GettingStarted/MoveArrayContent/CSharp/MoveArrayContent (CSharp).csproj.user
