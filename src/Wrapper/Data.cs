@@ -517,5 +517,119 @@ namespace ArrayFire
             return new Array(ptr);
         }
         #endregion
+
+        #region Move and Reorder array content
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Join(int dim, Array arr1, Array arr2)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_join(out ptr, dim, arr1._ptr, arr2._ptr));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Join(int dim, params Array[] arrays)
+        {
+            IntPtr ptr;
+            IntPtr[] inputPtrs = new IntPtr[arrays.Length];
+            for (int i = 0; i < arrays.Length; i++)
+                inputPtrs[i] = arrays[i]._ptr;
+            Internal.VERIFY(AFData.af_join_many(out ptr, dim, (uint)inputPtrs.Length, inputPtrs));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Tile(Array arr, uint x, uint y = 1, uint z = 1, uint w = 1)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_tile(out ptr, arr._ptr, x, y, z, w));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Reorder(Array arr, uint x, uint y = 1, uint z = 2, uint w = 3)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_reorder(out ptr, arr._ptr, x, y, z, w));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Shift(Array arr, int x, int y = 1, int z = 2, int w = 3)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_shift(out ptr, arr._ptr, x, y, z, w));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Flat(Array arr)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_flat(out ptr, arr._ptr));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Flip(Array arr, uint dim)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_flip(out ptr, arr._ptr, dim));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array ModDimensions(Array arr, int[] dims)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_moddims(out ptr, arr._ptr, (uint)dims.Length, Internal.toLongArray(dims)));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array ModDimensions(Array arr, int d0, int d1 = 1, int d2 = 1, int d3 = 1)
+        {
+            IntPtr ptr;
+            int[] dims = { d0, d1, d2, d3 };
+            Internal.VERIFY(AFData.af_moddims(out ptr, arr._ptr, (uint)dims.Length, Internal.toLongArray(dims)));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Select(Array condition, Array arr1, Array arr2)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_select(out ptr, condition._ptr, arr1._ptr, arr2._ptr));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Select(Array condition, Array arr1, double arg2)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_select_scalar_r(out ptr, condition._ptr, arr1._ptr, arg2));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Array Select(Array condition, double arg1, Array arr2)
+        {
+            IntPtr ptr;
+            Internal.VERIFY(AFData.af_select_scalar_l(out ptr, condition._ptr, arg1, arr2._ptr));
+            return new Array(ptr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Replace(Array arr1, Array condition, Array arr2)
+        {
+            Internal.VERIFY(AFData.af_replace(arr1._ptr, condition._ptr, arr2._ptr));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Replace(Array arr1, Array condition, double arg2)
+        {
+            Internal.VERIFY(AFData.af_replace_scalar(arr1._ptr, condition._ptr, arg2));
+        }
+        #endregion
     }
 }
